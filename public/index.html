@@ -9,11 +9,20 @@
   <h2>Instructions:</h2>
   <h3>Pass a full url into the /new/ directory and get an object containing a new "shortened" URL<br/>
     Paste shortened URL into address bar and you'll be redirected to the original site<br/><br/></h3>
-  <h2>Example:</h4>
-  <p><tt style="background: #f6d0db">https://tsmic.herokuapp.com/new/https://www.google.com</tt></p>
-  <p><tt style="background: #f6d0db">https://tsmic.herokuapp.com/1450166400</tt></p>
-  <h2>return example:</h4>
-  <p><tt style="background: #f6d0db">{"unixtime":1450166400,"natural":"December 15, 2015"}</tt></p>
+  <h2>Example creation:</h4>
+  <p><tt style="background: #f6d0db">https://shorterer.herokuapp.com/new/https://www.google.com</tt></p>
+  <h2>Example output:.
+  <p><tt style="background: #f6d0db">
+    {
+  "_id": "57841267d8610a0011a4bee4",
+  "original": "https://www.google.com",
+  "shorter": "https://shorterer.herokuapp.com/57841267d8610a0011a4bee4"
+  }
+</tt></p>
+  <h2>Usage example:</h4>
+  <p><tt style="background: #f6d0db">https://shorterer.herokuapp.com/57841267d8610a0011a4bee4</tt></p>
+  <h2>Redirected to example:</h4>
+  <p><tt style="background: #f6d0db">https://www.google.com</tt></p>
 </div>
 </body>
 </html>
