@@ -6,6 +6,7 @@ var lastName = "Dunn";
 var mongo = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var col = 'shortened'
+var validUrl = require('valid-url');
 
 app.get('/:short', function (req, res) {
   var shorter = req.params.short;
@@ -22,21 +23,31 @@ app.get('/:short', function (req, res) {
 
 app.get("/new/:link(*)", function(req, res) {
   var arg = req.param('link');
-  var id = new ObjectID();
 
-  var entry = {
-    _id: id,
-    original: arg,
-    shorter: "https://shorterer.herokuapp.com/" + id
+  if (validUrl.isUri(arg)){
+
+      var entry = {
+        _id: id,
+        original: arg,
+        shorter: "https://shorterer.herokuapp.com/" + id
+      }
+
+      mongo.connect(url, function(err, db) {
+        var collection = db.collection(col);
+        collection.insert(entry, function(err, data) {
+          console.log(JSON.stringify(entry));
+          db.close();
+        }); // end insert()
+      }); // end mongo.connect()
+
+
+  } else {
+      var entry = { error: arg + " is not a Valid URL! Please try again..."}
   }
 
-  mongo.connect(url, function(err, db) {
-    var collection = db.collection(col);
-    collection.insert(entry, function(err, data) {
-      console.log(JSON.stringify(entry));
-      db.close();
-    }); // end insert()
-  }); // end mongo.connect()
+  var id = new ObjectID();
+
+
   res.end(JSON.stringify(entry, null, '  '));
 })  // end app.get(/new/:link)
 
